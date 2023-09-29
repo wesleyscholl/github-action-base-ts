@@ -1,0 +1,23 @@
+name: Name Your Action
+
+on:
+  discussion:
+    types: [created]
+
+jobs:
+  autorespond:
+    name: Your Action Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Your Action Name
+        id: youraction
+        uses: ./
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Show Output
+        run: |
+          echo "output1 = ${{ steps.autorespond.outputs.output1 }}"
+          echo "output2 = ${{ steps.autorespond.outputs.output2 }}"
+

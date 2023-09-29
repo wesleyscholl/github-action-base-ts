@@ -1,0 +1,25 @@
+name: "GitHub Action Base Typescript - Action Name"
+description: "Action description"
+author: "Wesley Scholl"
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
+
+inputs:
+  GITHUB_TOKEN:
+    description: "The GitHub token for authentication."
+    required: true
+    default: "{{ secrets.GITHUB_TOKEN }}"
+  input1:
+    description: "input1 description"
+    required: false
+    default: "This string"
+  input2:
+    description: "input1 description"
+    required: false
+    default: 5
+
+branding:
+  icon: "message-square"
+  color: "purple"

@@ -63,8 +63,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: 10f0b77400703c4a65f38434106adf2d
-          filename: discussion-auto-responder__${{ env.BRANCH }}.json
+          gistID: fce8ce592425f8cc73ea124451808ce3
+          filename: github-action-base-ts__${{ env.BRANCH }}.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green

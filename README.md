@@ -84,7 +84,9 @@ Configure:
 
 Example [workflow](https://github.com/<your_github_username>/<github_repo>/<example_file>.yaml)
 
+## Configuration
 
+*If you fork this repository, ensure you enable workflows in the workflows tab.
 
 ## Credits
 

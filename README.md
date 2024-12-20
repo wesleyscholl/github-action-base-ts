@@ -9,7 +9,7 @@
 
 ## About
 
-GitHub Action Description
+GitHub Action Description Goes Here
 
 
 ## Usage

@@ -11,7 +11,7 @@
 
 GitHub Action Description
 
-
+## Test
 ## Usage
 
 In your workflow, to use this github action add a step like this to your workflow:

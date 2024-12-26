@@ -26,7 +26,10 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Running lint..."'
-                    sh 'npx eslint .'
+                    // Is the repo available here? Check
+                    sh 'ls -la'
+                    sh 'npm install eslint'
+                    sh 'eslint .'
                 }
             }
         }

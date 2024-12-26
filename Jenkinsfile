@@ -28,14 +28,6 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    sh 'echo "Building..."'
-                    sh 'npm run build'
-                }
-            }
-        }
         stage('Test') {
             steps {
                 script {
@@ -46,6 +38,14 @@ pipeline {
                     always {
                         step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
                     }
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'echo "Building..."'
+                    sh 'npm run build'
                 }
             }
         }

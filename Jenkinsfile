@@ -26,6 +26,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Running lint..."'
+                    sh 'npx eslint .'
                 }
             }
         }
@@ -33,6 +34,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Building..."'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
@@ -40,6 +43,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
+                    sh 'npm test'
                 }
             }
         }

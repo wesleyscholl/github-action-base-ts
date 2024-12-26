@@ -31,7 +31,7 @@ pipeline {
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, aggregatingResults: true, tools: checkStyle(pattern: 'eslint.xml')
+                    publishCheckstyle pattern: 'eslint.xml'
                 }
             }
         }

@@ -4,7 +4,7 @@
   "description": "Base Repo for Typescript GitHub Actions",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --coverageDirectory=output/coverage/jest --verbose",
     "build": "tsc && ncc build lib/src/index.js",
     "lint": "eslint",
     "prepare": "husky install"
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/wesleyscholl/<your_repo>.git"
   },
-  "keywords": ["github", "workflow", "actions"],
+  "keywords": [ "github", "workflow", "actions" ],
   "author": "wesley scholl",
   "license": "MIT",
   "bugs": {

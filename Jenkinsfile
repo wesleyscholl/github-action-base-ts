@@ -4,7 +4,7 @@ pipeline {
         nodejs 'node23'
     }
     stages {
-        stage('Checkout') {
+        stage('Install') {
             steps {
                 script {
                     echo "Git URL: ${env.GIT_URL}"
@@ -21,22 +21,17 @@ pipeline {
                     echo "Workspace: ${env.JOB_URL}"
                     echo "Node: ${env.NODE_NAME}"
                     echo "EXECUTOR_NUMBER: ${env.EXECUTOR_NUMBER}"
-                    echo "ENV: ${env}"
+                    echo "--------------------------------------------------"
+                    echo "--------------------------------------------------"
+                    echo "Installing Dependencies..."
+                    sh 'npm install'
                 }
             }
-        }
-        stage ('Static Linting Analysis') {
-            steps {
-                script {
-                echo "eslint..."
-                }
-            }   
         }
         stage('Build') {
             steps {
                 script {
                     sh 'echo "Building..."'
-                    sh 'npm install'
                     sh 'npm run build'
                 }
             }
@@ -46,6 +41,11 @@ pipeline {
                 script {
                     sh 'echo "Testing..."'
                     sh 'npm test'
+                }
+                post {
+                    always {
+                        step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
+                    }
                 }
             }
         }

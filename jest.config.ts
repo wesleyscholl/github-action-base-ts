@@ -2,7 +2,7 @@ export default {
   preset: "ts-jest",
   testEnvironment: "node",
   collectCoverage: true,
-  coverageReporters: ["lcov", "text-summary"],
+  coverageReporters: ["lcov", "text-summary", "text", "cobertura"],
   collectCoverageFrom: ["src/**/*.ts"],
   coveragePathIgnorePatterns: ["node_modules", "src/__tests__"],
   clearMocks: true,
@@ -18,5 +18,5 @@ export default {
   },
   transformIgnorePatterns: ["<rootDir>/node_modules"],
   verbose: true,
-  roots: ["<rootDir>/src"]
+  roots: ["<rootDir>/src"],
 };

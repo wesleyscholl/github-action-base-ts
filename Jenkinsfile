@@ -25,14 +25,13 @@ pipeline {
                 }
             }
         }
-        stage('Lint') {
+        stage ('Static Linting Analysis') {
             steps {
-                script {
-                    sh 'echo "Running lint..."'
-                    // Is the repo available here? Check
-                    sh 'ls -la'
-                    // sh 'npm install eslint'
-                    // sh 'eslint .'
+                sh ' ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml'
+            }
+            post {
+                always {
+                    recordIssues enabledForFailure: true, aggregatingResults: true, tool: checkStyle(pattern: 'eslint.xml')
                 }
             }
         }

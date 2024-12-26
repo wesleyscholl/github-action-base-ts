@@ -28,12 +28,7 @@ pipeline {
         stage ('Static Linting Analysis') {
             steps {
                 sh ' ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml'
-            }
-            post {
-                always {
-                    publishCheckstyle pattern: 'eslint.xml'
-                }
-            }
+            }   sh "cat eslint.xml"
         }
         stage('Build') {
             steps {

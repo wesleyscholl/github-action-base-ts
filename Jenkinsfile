@@ -20,7 +20,7 @@ pipeline {
                     echo "--------------------------------------------------"
                     echo "--------------------------------------------------"
                     echo "Installing Dependencies..."
-                    sh 'npm install'
+                    sh 'npm install --loglevel verbose'
                 }
             }
         }

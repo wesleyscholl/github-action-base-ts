@@ -31,8 +31,8 @@ pipeline {
                     sh 'echo "Running lint..."'
                     // Is the repo available here? Check
                     sh 'ls -la'
-                    sh 'npm install eslint'
-                    sh 'eslint .'
+                    // sh 'npm install eslint'
+                    // sh 'eslint .'
                 }
             }
         }

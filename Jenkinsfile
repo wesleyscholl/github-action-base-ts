@@ -28,7 +28,7 @@ pipeline {
         stage ('Static Linting Analysis') {
             steps {
                 script {
-                sh "echo eslint..."
+                echo "eslint..."
                 }
             }   
         }

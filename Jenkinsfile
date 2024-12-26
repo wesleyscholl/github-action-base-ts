@@ -18,7 +18,7 @@ pipeline {
                     echo "Workspace: ${env.JOB_URL}"
                     echo "Node: ${env.NODE_NAME}"
                     echo "EXECUTOR_NUMBER: ${env.EXECUTOR_NUMBER}"
-                    
+                    echo "ENV: ${env}"
                 }
             }
         }

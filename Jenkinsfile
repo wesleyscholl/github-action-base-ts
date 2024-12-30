@@ -54,9 +54,9 @@ pipeline {
         }
         stage('Creating Image') {
             steps {
-                docker.build("my-image:${env.BUILD_ID}")
                 script {
                     sh 'echo "Creating Image..."'
+                    docker.build("my-image:${env.BUILD_ID}")
                     // Create manifest file for container
                     sh '''cat <<EOF > app.yaml
                         apiVersion: apps/v1

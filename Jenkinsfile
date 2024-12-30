@@ -29,7 +29,7 @@ pipeline {
                 script {
                     sh 'echo "Linting..."'
                     sh 'npm install -g eslint'
-                    sh 'eslint --max-errors=0 --max-warnings=3 --fix .'
+                    sh 'eslint --max-warnings=3 --fix .'
                 }
             }
         }

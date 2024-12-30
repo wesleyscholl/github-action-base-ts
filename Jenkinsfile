@@ -24,6 +24,15 @@ pipeline {
                 }
             }
         }
+        stage('Lint') {
+            steps {
+                script {
+                    sh 'echo "Linting..."'
+                    sh 'npm install -g eslint'
+                    sh 'eslint --init --max-errors=0 --max-warnings=3 --fix'
+                }
+            }
+        }
         stage('Test') {
             steps {
                 script {

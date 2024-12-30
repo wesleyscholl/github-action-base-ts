@@ -4,7 +4,7 @@ pipeline {
         nodejs 'node23'
     }
     stages {
-        stage('Install') {
+        stage('Install Dependencies') {
             steps {
                 script {
                     echo "--------------------------------------------------"
@@ -52,13 +52,42 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Containerize') {
             steps {
                 script {
-                    sh 'echo "Deploying..."'
-                    // Deploy to the server
-                    kubeDeploy(configs: 'kubeconfig', namespace: 'default', resourceType: 'deployment', resourceNames: 'myapp', replicas: 3)
+                    sh 'echo "Containerizing..."'
+                    sh 'docker build -t app .'
+                    // Create manifest file for container
+                    sh '''cat <<EOF > app.yaml
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                        name: app
+                        spec:
+                        replicas: 1
+                        selector:
+                            matchLabels:
+                            app: app
+                        template:
+                            metadata:
+                            labels:
+                                app: app
+                            spec:
+                            containers:
+                            - name: app
+                                image: app
+                                ports:
+                                - containerPort: 3000
+                        EOF'''
                 }
+            }
+        }
+        stage('Deploy Container') {
+            withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kubernetes.default.svc.cluster.local']) {
+                sh 'echo "Deploying Container..."'
+                sh 'kubectl apply -f app.yaml'
+                sh 'kubectl get pods --watch'
+                sh 'until kubectl get pods | grep app | grep -m 1 "Running"; do sleep 5; done'
             }
         }
         stage('Notify') {

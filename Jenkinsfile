@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
-                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose -- --maxWorkers=2 --runInBand'
+                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2'
                 }
                 post {
                     always {

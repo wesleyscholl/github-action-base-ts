@@ -28,9 +28,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
-                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2'
+                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=text-lcov --outputFile=coverage/lcov.info'
                 }
-                recordCoverage(tools: [[parser: 'cobertura', pattern: 'coverage/cobertura-coverage.xml']])
             }
         }
         stage('Build') {

@@ -7,6 +7,8 @@ pipeline {
         stage('Install') {
             steps {
                 script {
+                    echo "--------------------------------------------------"
+                    echo "--------------------------------------------------"
                     echo "Git URL: ${env.GIT_URL}"
                     echo "Branch: ${env.GIT_BRANCH}"
                     echo "Commit: ${env.GIT_COMMIT}"
@@ -28,7 +30,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
-                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=cobertura --coverageDirectory=coverage'
+                    sh 'npm test'
                 }
             }
         }
@@ -47,6 +49,23 @@ pipeline {
                 script {
                     sh 'echo "Building..."'
                     sh 'npm run build'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    sh 'echo "Deploying..."'
+                    // Deploy to the server
+                    kubeDeploy(configs: 'kubeconfig', namespace: 'default', resourceType: 'deployment', resourceNames: 'myapp', replicas: 3)
+                }
+            }
+        }
+        stage('Notify') {
+            steps {
+                script {
+                    sh 'echo "Notifying..."'
+                    sh "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} succeeded"
                 }
             }
         }

@@ -28,7 +28,17 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
+                    sh 'mkdir -p coverage'
                     sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=cobertura --outputFile=coverage/cobertura-coverage.xml'
+                }
+            }
+        }
+        stage('Publish Coverage') {
+            steps {
+                script {
+                    sh 'echo "Publishing Coverage..."'
+                    // Check for the existence of the coverage report
+                    sh 'ls -l coverage/cobertura-coverage.xml'
                 }
                 recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']], sourceCodeRetention: 'EVERY_BUILD')
             }

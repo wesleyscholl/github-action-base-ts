@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'node23'
+        nodejs 'node23'  
     }
     stages {
         stage('Install Dependencies') {
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Creating Image..."'
-                    docker.build("my-image:${env.BUILD_ID}")
+                    sh 'docker build . -t app'
                     // Create manifest file for container
                     sh '''cat <<EOF > app.yaml
                         apiVersion: apps/v1
@@ -75,7 +75,7 @@ pipeline {
                             spec:
                             containers:
                             - name: app
-                                image: my-image:${env.BUILD_ID}
+                                image: app
                                 ports:
                                 - containerPort: 3000
                         EOF'''

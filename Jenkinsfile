@@ -83,11 +83,15 @@ pipeline {
             }
         }
         stage('Deploy Container') {
-            withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kubernetes.default.svc.cluster.local']) {
-                sh 'echo "Deploying Container..."'
-                sh 'kubectl apply -f app.yaml'
-                sh 'kubectl get pods --watch'
-                sh 'until kubectl get pods | grep app | grep -m 1 "Running"; do sleep 5; done'
+            steps {
+                script {
+                    withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kubernetes.default.svc.cluster.local']) {
+                        sh 'echo "Deploying Container..."'
+                        sh 'kubectl apply -f app.yaml'
+                        sh 'kubectl get pods --watch'
+                        sh 'until kubectl get pods | grep app | grep -m 1 "Running"; do sleep 5; done'
+                    }
+                }
             }
         }
         stage('Notify') {

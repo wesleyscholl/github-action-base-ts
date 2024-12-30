@@ -23,6 +23,9 @@ function run() {
         const token = (0, core_1.getInput)("GITHUB_TOKEN");
         const input1 = (0, core_1.getInput)("input1");
         const input2 = (0, core_1.getInput)("input2");
+        console.log("token", token);
+        console.log("input1", input1);
+        console.log("input2", input2);
         yield (0, core_1.setOutput)("token", token);
         yield (0, core_1.setOutput)("output1", input1);
         yield (0, core_1.setOutput)("output2", input2);

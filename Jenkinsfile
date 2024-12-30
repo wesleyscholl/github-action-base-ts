@@ -42,15 +42,6 @@ pipeline {
                 recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']], sourceCodeRetention: 'EVERY_BUILD')
             }
         }
-        stage('Publish Coverage') {
-            steps {
-                script {
-                    sh 'echo "Publishing Coverage..."'
-                    sh 'npm install -g coveralls'
-                    sh 'coveralls < coverage/lcov.info'
-                }
-            }
-        }
         stage('SonarQube') {
             steps {
                 script {

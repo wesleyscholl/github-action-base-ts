@@ -29,7 +29,7 @@ pipeline {
                 script {
                     sh 'echo "Linting..."'
                     sh 'npm install -g eslint'
-                    sh 'eslint --init --max-errors=0 --max-warnings=3 --fix'
+                    sh 'eslint --max-errors=0 --max-warnings=3 --fix .'
                 }
             }
         }
@@ -37,7 +37,28 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing..."'
-                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=text-lcov --outputFile=coverage/lcov.info'
+                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=cobertura --outputFile=coverage/cobertura-coverage.xml'
+                }
+                recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']], sourceCodeRetention: 'EVERY_BUILD')
+            }
+        }
+        stage('Publish Coverage') {
+            steps {
+                script {
+                    sh 'echo "Publishing Coverage..."'
+                    sh 'npm install -g coveralls'
+                    sh 'coveralls < coverage/lcov.info'
+                }
+            }
+        }
+        stage('SonarQube') {
+            steps {
+                script {
+                    sh 'echo "SonarQube..."'
+                    sh 'npm install -g sonarqube-scanner'
+                    withSonarQubeEnv('SonarQube') {
+                        sh 'sonar-scanner'
+                    }
                 }
             }
         }

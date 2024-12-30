@@ -1,7 +1,8 @@
 pipeline {
     agent any
     tools {
-        nodejs 'node23'  
+        nodejs 'node23'
+        docker 'docker'  
     }
     stages {
         stage('Install Dependencies') {

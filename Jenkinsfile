@@ -42,17 +42,6 @@ pipeline {
                 recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']], sourceCodeRetention: 'EVERY_BUILD')
             }
         }
-        stage('SonarQube') {
-            steps {
-                script {
-                    sh 'echo "SonarQube..."'
-                    sh 'npm install -g sonarqube-scanner'
-                    withSonarQubeEnv('SonarQube') {
-                        sh 'sonar-scanner'
-                    }
-                }
-            }
-        }
         stage('Build') {
             steps {
                 script {

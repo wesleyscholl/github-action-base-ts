@@ -29,7 +29,7 @@ pipeline {
                 script {
                     sh 'echo "Testing..."'
                     sh 'mkdir -p coverage'
-                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=cobertura --outputFile=coverage/cobertura-coverage.xml'
+                    sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2 --coverage --coverageReporters=cobertura --coverageDirectory=coverage'
                 }
             }
         }

@@ -52,11 +52,11 @@ pipeline {
                 }
             }
         }
-        stage('Containerize') {
+        stage('Creating Image') {
             steps {
+                docker.build("my-image:${env.BUILD_ID}")
                 script {
-                    sh 'echo "Containerizing..."'
-                    sh 'docker build -t app .'
+                    sh 'echo "Creating Image..."'
                     // Create manifest file for container
                     sh '''cat <<EOF > app.yaml
                         apiVersion: apps/v1
@@ -75,18 +75,18 @@ pipeline {
                             spec:
                             containers:
                             - name: app
-                                image: app
+                                image: my-image:${env.BUILD_ID}
                                 ports:
                                 - containerPort: 3000
                         EOF'''
                 }
             }
         }
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
                 script {
                     withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kubernetes.default.svc.cluster.local']) {
-                        sh 'echo "Deploying Container..."'
+                        sh 'echo "Deploying..."'
                         sh 'kubectl apply -f app.yaml'
                         sh 'kubectl get pods --watch'
                         sh 'until kubectl get pods | grep app | grep -m 1 "Running"; do sleep 5; done'

@@ -52,53 +52,11 @@ pipeline {
                 }
             }
         }
-        // stage('Creating Image') {
-        //     steps {
-        //         script {
-        //             sh 'echo "Creating Image..."'
-        //             sh 'docker build . -t app'
-        //             // Create manifest file for container
-        //             sh '''cat <<EOF > app.yaml
-        //                 apiVersion: apps/v1
-        //                 kind: Deployment
-        //                 metadata:
-        //                 name: app
-        //                 spec:
-        //                 replicas: 1
-        //                 selector:
-        //                     matchLabels:
-        //                     app: app
-        //                 template:
-        //                     metadata:
-        //                     labels:
-        //                         app: app
-        //                     spec:
-        //                     containers:
-        //                     - name: app
-        //                         image: app
-        //                         ports:
-        //                         - containerPort: 3000
-        //                 EOF'''
-        //         }
-        //     }
-        // }
-        // stage('Deploy') {
-        //     steps {
-        //         script {
-        //             withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kubernetes.default.svc.cluster.local']) {
-        //                 sh 'echo "Deploying..."'
-        //                 sh 'kubectl apply -f app.yaml'
-        //                 sh 'kubectl get pods --watch'
-        //                 sh 'until kubectl get pods | grep app | grep -m 1 "Running"; do sleep 5; done'
-        //             }
-        //         }
-        //     }
-        // }
         stage('Notify') {
             steps {
                 script {
                     sh 'echo "Notifying..."'
-                    sh "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} succeeded"
+                    sh "${env.JOB_NAME} succeeded"
                 }
             }
         }

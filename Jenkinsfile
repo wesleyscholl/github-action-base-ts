@@ -30,11 +30,7 @@ pipeline {
                     sh 'echo "Testing..."'
                     sh 'NODE_OPTIONS="--max-old-space-size=4096" npm test --verbose --maxWorkers=2'
                 }
-                post {
-                    always {
-                        step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
-                    }
-                }
+                recordCoverage(tools: [[parser: 'cobertura', pattern: 'coverage/cobertura-coverage.xml']])
             }
         }
         stage('Build') {

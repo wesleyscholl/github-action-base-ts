@@ -41,7 +41,7 @@ Update these key files:
 🧪 __tests__/          # Your test files
 ```
 
-### 3️⃣ Build and Test
+### 3️⃣ Build and Test the Action
 
 ```bash
 # Install dependencies
